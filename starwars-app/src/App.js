@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar"
 import Home from "./components/Home"
 import People from "./components/People"
 import Planets from "./components/Planets"
+import Films from './components/Films'
 
 
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -15,6 +16,7 @@ function App() {
 
 const [people, setPeople] = useState([]);
 const [planets, setPlanets] = useState([]);
+const [films, setFilms] = useState([]);
 const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,11 +32,17 @@ const [loading, setLoading] = useState(true);
     setPlanets(data.results);
     setLoading(false);
   }
+  async function fetchFilms() {
+    let res = await fetch('https://swapi.co/api/films/?format=json');
+    let data = await res.json();
+    setFilms(data.results);
+    setLoading(false);
+  }
   fetchPeople();
   fetchPlanets();
+  fetchFilms();
 }, []);
-console.log("data", people);
-console.log("data", planets);
+
 
 
 
@@ -61,6 +69,9 @@ console.log("data", planets);
             </Router>
             <Router exact path="/planets">
               <Planets data={planets}/>
+            </Router>
+            <Router exact path="/films">
+              <Films data={films}/>
             </Router>
           </Switch>
           )}
