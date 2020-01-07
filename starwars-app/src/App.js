@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Container } from 'semantic-ui-react'
+import { Container, Dimmer, Loader } from 'semantic-ui-react'
 import Navbar from "./components/Navbar"
 import Home from "./components/Home"
 import People from "./components/People"
 import Planets from "./components/Planets"
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 
 function App() {
@@ -21,11 +22,13 @@ const [loading, setLoading] = useState(true);
     let res = await fetch('https://swapi.co/api/people/?format=json');
     let data = await res.json();
     setPeople(data.results);
+    setLoading(false);
   }
   async function fetchPlanets() {
     let res = await fetch('https://swapi.co/api/planets/?format=json');
     let data = await res.json();
     setPlanets(data.results);
+    setLoading(false);
   }
   fetchPeople();
   fetchPlanets();
@@ -44,17 +47,24 @@ console.log("data", planets);
         
         <Navbar />
         <Container>
-          <Switch>
+          {loading ? (
+            <Dimmer active inverted>
+              <Loader inverted>Loading...</Loader>
+            </Dimmer>
+          ) : (
+            <Switch>
             <Router exact path="/">
               <Home />
             </Router>
             <Router exact path="/people">
-              <People />
+              <People data={people} />
             </Router>
-            <Router>
-              <Planets exact path="/planets"/>
+            <Router exact path="/planets">
+              <Planets data={planets}/>
             </Router>
           </Switch>
+          )}
+          
         </Container>
       
       </Router>
@@ -69,39 +79,3 @@ console.log("data", planets);
 
 export default App;
 
-
-
-
-
-
-
-
-
-// ------------
-
-
-
-// getStarship = (idx) => {
-//   return this.state.starships[idx];
-// }
-// getPeople = (idx) => {
-//   return this.state.people[idx];
-// }
-// getPeople2 = (idx) => {
-//   return this.state.people[idx];
-// }
-
-// async componentDidMount() {
-//   const starships = await getAllStarships();
-//   this.setState({ starships: starships.results });
-//   const people = await getAllPeople();
-//   this.setState({ people: people.results });
-//   const people2 = await getAllPeople2();
-//   this.setState({ people2: people2.results });
-
-// }
-
-// async componentDidMount() {
-//   const people = await getAllPeople();
-//   this.setState({ people: people.results });
-// }
