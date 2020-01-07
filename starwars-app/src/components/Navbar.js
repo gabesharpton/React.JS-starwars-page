@@ -19,6 +19,9 @@ export default function Navbar() {
                 <Link to='/films'>
                 <Menu.Item name="Films" />
                 </Link>
+                <Link to='/species'>
+                <Menu.Item name="Species" />
+                </Link>
             </Container>
         </Menu>
     )

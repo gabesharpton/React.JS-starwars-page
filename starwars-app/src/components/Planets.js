@@ -5,7 +5,7 @@ import { Card, Grid } from 'semantic-ui-react'
 export default function Planets({ data }) {
     return(
         <div>
-        <h1>People</h1>
+        <h1>Planets</h1>
         <Grid columns={3}>
             {data.map((people, i) => {
                 return (

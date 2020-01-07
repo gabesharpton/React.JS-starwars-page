@@ -6,6 +6,7 @@ import Home from "./components/Home"
 import People from "./components/People"
 import Planets from "./components/Planets"
 import Films from './components/Films'
+import Species from './components/Species'
 
 
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -17,6 +18,7 @@ function App() {
 const [people, setPeople] = useState([]);
 const [planets, setPlanets] = useState([]);
 const [films, setFilms] = useState([]);
+const [species, setSpecies] = useState([]);
 const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,11 +40,20 @@ const [loading, setLoading] = useState(true);
     setFilms(data.results);
     setLoading(false);
   }
+  async function fetchSpecies() {
+    let res = await fetch('https://swapi.co/api/species/?format=json');
+    let data = await res.json();
+    setSpecies(data.results);
+    setLoading(false);
+    console.log(data)
+  }
   fetchPeople();
   fetchPlanets();
   fetchFilms();
+  fetchSpecies();
+  
+  
 }, []);
-
 
 
 
@@ -72,6 +83,9 @@ const [loading, setLoading] = useState(true);
             </Router>
             <Router exact path="/films">
               <Films data={films}/>
+            </Router>
+            <Router exact path="/species">
+              <Species data={species}/>
             </Router>
           </Switch>
           )}
