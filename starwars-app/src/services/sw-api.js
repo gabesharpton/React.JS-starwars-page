@@ -5,9 +5,14 @@ export function getAllStarships() {
     .then(res => res.json());
 }
 export function getAllPeople() {
-    return fetch(`${BASE_URL}people`, {mode: "cors"})
-      .then(res => res.json());
+    return fetch(`${BASE_URL}people/?page=1`, {mode: "cors"})
+      .then(res => res.json()); 
   }
+  export function getAllPeople2() {
+    return fetch(`${BASE_URL}people/?page=2`, {mode: "cors"})
+      .then(res => res.json()); 
+  }
+
   export function getAllPlanets() {
     return fetch(`${BASE_URL}planets`, {mode: "cors"})
       .then(res => res.json());
